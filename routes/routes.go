@@ -11,10 +11,14 @@ import (
 
 type RegisterData struct {
 	// OrgName     string
-	Email    string
-	Password string
-	// ConfirmPass string
-	// Type        string
+	Email       string
+	Password    string
+	ConfirmPass string
+	Type        string
+	Years      string
+	License string
+	Kra string
+	Phone string
 }
 
 type User struct {
@@ -41,15 +45,25 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("ddd")
 	data := RegisterData{
 		// 	OrgName:     r.FormValue("orgname"),
-		Email:    r.FormValue("email"),
-		Password: r.FormValue("pass"),
-		// 	ConfirmPass: r.FormValue("confirm"),
-		// Type:        r.FormValue("type"),
+		Email:       r.FormValue("email"),
+		Password:    r.FormValue("pass"),
+		ConfirmPass: r.FormValue("confirm"),
+		Type:        r.FormValue("type"),
+		Years:       r.FormValue("years"),
+		License : r.FormValue("license"),
+		Kra: r.FormValue("kra"),
+		Phone: r.FormValue("phone"),
 	}
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
 		return
+	}
+	check_user, _ := http.Get(`http://localhost:3000/users?email=%s` + data.Email)
+
+	// fmt.Println(us)
+	if check_user != nil {
+		println("Email already exists")
 	}
 	resp, err := http.Post("http://localhost:3000/users", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
