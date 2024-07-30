@@ -118,12 +118,12 @@
                       <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40% Repaid</div>
                     </div>
                     <div class="loan-details">
-                      <p><strong>Loan Amount:</strong> $10,000</p>
+                      <p><strong>Loan Amount:</strong> Ksh. 10,000</p>
                       <p><strong>Interest Rate:</strong> 8% per annum</p>
                       <p><strong>Term:</strong> 24 months</p>
-                      <p><strong>Monthly Payment:</strong> $452.73</p>
+                      <p><strong>Monthly Payment:</strong> Ksh. 452.73</p>
                       <p><strong>Next Payment Due:</strong> May 15, 2023</p>
-                      <p><strong>Remaining Balance:</strong> $6,000</p>
+                      <p><strong>Remaining Balance:</strong> Ksh. 6,000</p>
                     </div>
                     <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#paymentModal1">Make a Payment</button>
                   </div>
@@ -137,12 +137,12 @@
                       <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60% Repaid</div>
                     </div>
                     <div class="loan-details">
-                      <p><strong>Loan Amount:</strong> $5,000</p>
+                      <p><strong>Loan Amount:</strong> Ksh. 5,000</p>
                       <p><strong>Interest Rate:</strong> 7% per annum</p>
                       <p><strong>Term:</strong> 12 months</p>
-                      <p><strong>Monthly Payment:</strong> $433.33</p>
+                      <p><strong>Monthly Payment:</strong> Ksh. 433.33</p>
                       <p><strong>Next Payment Due:</strong> May 20, 2023</p>
-                      <p><strong>Remaining Balance:</strong> $2,000</p>
+                      <p><strong>Remaining Balance:</strong> Ksh. 2,000</p>
                     </div>
                     <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#paymentModal2">Make a Payment</button>
                   </div>
@@ -172,37 +172,37 @@
                           <tr>
                             <td>May 15, 2023</td>
                             <td>Equipment Upgrade</td>
-                            <td>$452.73</td>
-                            <td>$385.73</td>
-                            <td>$67.00</td>
-                            <td>$5,614.27</td>
+                            <td>Ksh. 452.73</td>
+                            <td>Ksh. 385.73</td>
+                            <td>Ksh. 67.00</td>
+                            <td>Ksh. 5,614.27</td>
                             <td><span class="badge bg-warning">Upcoming</span></td>
                           </tr>
                           <tr>
                             <td>May 20, 2023</td>
                             <td>Working Capital</td>
-                            <td>$433.33</td>
-                            <td>$404.33</td>
-                            <td>$29.00</td>
-                            <td>$1,595.67</td>
+                            <td>Ksh. 433.33</td>
+                            <td>Ksh. 404.33</td>
+                            <td>Ksh. 29.00</td>
+                            <td>Ksh. 1,595.67</td>
                             <td><span class="badge bg-warning">Upcoming</span></td>
                           </tr>
                           <tr>
                             <td>Apr 15, 2023</td>
                             <td>Equipment Upgrade</td>
-                            <td>$452.73</td>
-                            <td>$383.16</td>
-                            <td>$69.57</td>
-                            <td>$6,000.00</td>
+                            <td>Ksh. 452.73</td>
+                            <td>Ksh. 383.16</td>
+                            <td>Ksh. 69.57</td>
+                            <td>Ksh. 6,000.00</td>
                             <td><span class="badge bg-success">Paid</span></td>
                           </tr>
                           <tr>
                             <td>Apr 20, 2023</td>
                             <td>Working Capital</td>
-                            <td>$433.33</td>
-                            <td>$401.63</td>
-                            <td>$31.70</td>
-                            <td>$2,000.00</td>
+                            <td>Ksh. 433.33</td>
+                            <td>Ksh. 401.63</td>
+                            <td>Ksh. 31.70</td>
+                            <td>Ksh. 2,000.00</td>
                             <td><span class="badge bg-success">Paid</span></td>
                           </tr>
                         </tbody>
@@ -228,15 +228,17 @@
               <form>
                 <div class="mb-3">
                   <label for="paymentAmount1" class="form-label">Payment Amount</label>
-                  <input type="number" class="form-control" id="paymentAmount1" value="452.73" min="0" step="0.01">
+                  <input type="number" class="form-control" id="paymentAmount1" min="0" step="0.01">
                 </div>
                 <div class="mb-3">
                   <label for="paymentMethod1" class="form-label">Payment Method</label>
                   <select class="form-select" id="paymentMethod1">
-                    <option value="bank_transfer">Bank Transfer</option>
-                    <option value="credit_card">Credit Card</option>
-                    <option value="debit_card">Debit Card</option>
+                    <option value="Mpesa">Mpesa</option>
                   </select>
+                </div>
+                <div class="mb-3">
+                  <label for="mpesa number" class="form-label">Mpesa number</label>
+                  <input type="text" class="form-control" id="mpesa" name="mpesa" required>
                 </div>
               </form>
             </div>
@@ -260,15 +262,17 @@
               <form>
                 <div class="mb-3">
                   <label for="paymentAmount2" class="form-label">Payment Amount</label>
-                  <input type="number" class="form-control" id="paymentAmount2" value="433.33" min="0" step="0.01">
+                  <input type="number" class="form-control" id="paymentAmount2" min="0" step="0.01">
                 </div>
                 <div class="mb-3">
                   <label for="paymentMethod2" class="form-label">Payment Method</label>
                   <select class="form-select" id="paymentMethod2">
-                    <option value="bank_transfer">Bank Transfer</option>
-                    <option value="credit_card">Credit Card</option>
-                    <option value="debit_card">Debit Card</option>
+                    <option value="Mpesa">Mpesa</option>
                   </select>
+                  <div class="mb-3">
+                    <label for="mpesa number" class="form-label">Mpesa number</label>
+                    <input type="text" class="form-control" id="mpesa" name="mpesa" required>
+                  </div>
                 </div>
               </form>
             </div>
@@ -281,21 +285,34 @@
       </div>
     
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-      <script>
-        function makePayment(loanId) {
-          const amount = document.getElementById(`paymentAmount${loanId}`).value;
-          const method = document.getElementById(`paymentMethod${loanId}`).value;
-          
-          // Here you would typically send this data to your server to process the payment
-          console.log(`Processing payment for Loan #${loanId}: $${amount} via ${method}`);
-          
-          // For demo purposes, we'll just show an alert
-          alert(`Payment of $${amount} for Loan #${loanId} has been processed successfully!`);
-          
-          // Close the modal
-          const modal = bootstrap.Modal.getInstance(document.getElementById(`paymentModal${loanId}`));
-          modal.hide();
-        }
-      </script>
+<script>
+  function makePayment(loanId) {
+    const amountElement = document.getElementById(`paymentAmount${loanId}`);
+    const methodElement = document.getElementById(`paymentMethod${loanId}`);
+    const modalElement = document.getElementById(`paymentModal${loanId}`);
+
+    // Check if elements exist
+    if (!amountElement || !methodElement || !modalElement) {
+      console.error('One or more elements not found.');
+      return;
+    }
+
+    const amount = amountElement.value;
+    const method = methodElement.value;
+
+    // Here you would typically send this data to your server to process the payment
+    console.log(`Processing payment for Loan ${loanId}: $${amount} via ${method}`);
+
+    // For demo purposes, we'll just show an alert
+    alert(`You will receive a prompt on your phone to complete the transaction via ${method}`);
+
+    // Close the modal
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if (modal) {
+      modal.hide();
+    }
+  }
+</script>
+
     </body>
     </html>
