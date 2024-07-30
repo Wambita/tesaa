@@ -42,8 +42,17 @@ func main() {
 		case "/download":
 			routes.MfiReportDownloadHandler(w, r)
 
+		case "/active-loans":
+			routes.BusinessActiveLoansHandler(w, r)
+
+		case "/business-profile":
+			routes.BusinessProfileHandler(w, r)
+		case "/loan-application":
+			routes.BusinessLoanApplicationHandler(w, r)
+		case "/business-transactions":
+			routes.BusinessTransactionsHandler(w, r)
 		default:
-			http.NotFound(w, r)
+			routes.ErrorHandler(w, r)
 		}
 	})
 
