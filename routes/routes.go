@@ -10,16 +10,15 @@ import (
 )
 
 type RegisterData struct {
-	// OrgName     string
-	AccountType string
-	Email       string
-	Password    string
-	ConfirmPass string
-	Type        string
-	Years       string
-	License     string
-	Kra         string
-	Phone       string
+	AccountType string `json:"institution_type"`
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	ConfirmPass string `json:"confirm_pass"`
+	Type        string `json:"type"`
+	Years       string `json:"years"`
+	License     string `json:"license"`
+	Kra         string `json:"kra"`
+	Phone       string `json:"phone"`
 }
 
 type User struct {
