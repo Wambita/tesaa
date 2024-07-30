@@ -38,76 +38,77 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AuthHandler(w http.ResponseWriter, r *http.Request) {
-	// Parse the form data
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Error parsing form", http.StatusBadRequest)
-		return
-	}
+    // Parse the form data
+    if err := r.ParseForm(); err != nil {
+        http.Error(w, "Error parsing form", http.StatusBadRequest)
+        return
+    }
 
-	email := r.FormValue("email")
-	password := r.FormValue("password")
-	instType := r.FormValue("inst-type")
+    email := r.FormValue("email")
+    password := r.FormValue("password")
+    instType := r.FormValue("inst-type")
+    fmt.Println("Institution", instType)
+    fmt.Println("Email: ", email)
 
-	// Fetch users data
-	res, err := http.Get("http://localhost:3000/users")
-	if err != nil {
-		http.Error(w, "Error fetching data", http.StatusInternalServerError)
-		fmt.Println("Error fetching data:", err)
-		return
-	}
-	defer res.Body.Close()
+    // Fetch users data
+    url := "http://localhost:3000/users?email=" + email
+    res, err := http.Get(url)
+    if err != nil {
+        http.Error(w, "Error fetching data", http.StatusInternalServerError)
+        fmt.Println("Error fetching data:", err)
+        return
+    }
+    defer res.Body.Close()
 
-	// Read response body
-	ResBody, err := io.ReadAll(res.Body)
-	if err != nil {
-		http.Error(w, "Error reading response body", http.StatusInternalServerError)
-		fmt.Println("Error reading response body:", err)
-		return
-	}
+    // Read response body
+    ResBody, err := io.ReadAll(res.Body)
+    if err != nil {
+        http.Error(w, "Error reading response body", http.StatusInternalServerError)
+        fmt.Println("Error reading response body:", err)
+        return
+    }
 
-	// Unmarshal users data
-	var users []User
-	if err := json.Unmarshal(ResBody, &users); err != nil {
-		http.Error(w, "Error parsing JSON", http.StatusInternalServerError)
-		fmt.Println("Error parsing JSON:", err)
-		return
-	}
+    // Unmarshal users data
+    var users []User
+    if err := json.Unmarshal(ResBody, &users); err != nil {
+        http.Error(w, "Error parsing JSON", http.StatusInternalServerError)
+        fmt.Println("Error parsing JSON:", err)
+        return
+    }
 
-	// Find matching user
-	isUser := false
-	for i := 0; i < len(users); i++ {
-		if users[i].Email == email && users[i].Password == password {
-			userProfile = users[i]
-			if instType == "business" {
-				isUser = true
-				break
-			}
-		}
-	}
+    // Ensure we have at least one user
+    if len(users) == 0 {
+        http.Error(w, "User not found", http.StatusUnauthorized)
+        return
+    }
 
-	if isUser {
-		BusinessHandler(w, r)
-	} else {
-		RegisterHandler(w, r)
-	}
-	// fmt.Println(userProfile)
-	// Render template
-	// tpl, err := template.ParseFiles("template/auth/auth.html")
-	// if err != nil {
-	// 	http.Error(w, "Error loading template", http.StatusInternalServerError)
-	// 	fmt.Println("Error parsing file:", err)
-	// 	return
-	// }
+    // Find matching user
+    isUser := false
+    if users[0].Password == password {
+        if instType == users[0].InstitutionType {
+            isUser = true
+			userProfile = users[0]
+        }
+    }
 
-	// if err := tpl.Execute(w, userProfile); err != nil {
-	// 	http.Error(w, "Error rendering template", http.StatusInternalServerError)
-	// 	fmt.Println("Error executing template:", err)
-	// }
+    if isUser {
+        switch instType {
+        case "business":
+            BusinessHandler(w, r)
+        case "microfinance":
+            MfiHandler(w, r)
+        default:
+            http.Error(w, "Unknown institution type", http.StatusBadRequest)
+        }
+    } else {
+        http.Error(w, "Invalid credentials or institution type", http.StatusUnauthorized)
+    }
 }
 
-func BusinessHandler(w http.ResponseWriter,  r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("template/business_dashboard.html"))
-		tmpl.Execute(w, userProfile)
+
+func BusinessHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business_dashboard.html"))
+	tmpl.Execute(w, userProfile)
 }
 
 func MfiHandler(w http.ResponseWriter, r *http.Request) {
