@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -8,8 +10,8 @@ import (
 
 type RegisterData struct {
 	// OrgName     string
-	Email       string
-	Password    string
+	Email    string
+	Password string
 	// ConfirmPass string
 	// Type        string
 }
@@ -28,14 +30,25 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	fmt.Println("ddd")
 	data := RegisterData{
-	// 	OrgName:     r.FormValue("orgname"),
-		Email:       r.FormValue("email"),
-		Password:    r.FormValue("pass"),
-	// 	ConfirmPass: r.FormValue("confirm"),
+		// 	OrgName:     r.FormValue("orgname"),
+		Email:    r.FormValue("email"),
+		Password: r.FormValue("pass"),
+		// 	ConfirmPass: r.FormValue("confirm"),
 		// Type:        r.FormValue("type"),
 	}
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
+		return
+	}
+	resp, err := http.Post("http://localhost:3000/users", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		http.Error(w, "Error posting JSON data", http.StatusInternalServerError)
+		return
+	}
 
-	 fmt.Print( data.Email, data.Password)
+	defer resp.Body.Close()
+	fmt.Print(data.Email, data.Password)
 
 	tmpl := template.Must(template.ParseFiles("template/register.html"))
 	tmpl.Execute(w, nil)
