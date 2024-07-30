@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "blockchain": [
+        {
+          "Hash": "9304e8c72d440d421b3bc4b7675a6ebb6feb08f87855a9e0ffbc81328b66101d",
+          "PreviousHash": "",
+          "Data": {},
+          "Timestamp": "2024-07-30T21:18:53.852092407+03:00",
+          "Pow": 0
+        },
+        {
+          "Hash": "000b326618ddb311d8180cd0e232623f8e5cdee8d47fbab732a5abcace749810",
+          "PreviousHash": "9304e8c72d440d421b3bc4b7675a6ebb6feb08f87855a9e0ffbc81328b66101d",
+          "Data": {
+            "amount": 10,
+            "from": "Alice",
+            "to": "Bob"
+          },
+          "Timestamp": "2024-07-30T21:18:53.852395199+03:00",
+          "Pow": 1504
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "blockchain": [
+        {
+          "Hash": "9304e8c72d440d421b3bc4b7675a6ebb6feb08f87855a9e0ffbc81328b66101d",
+          "PreviousHash": "",
+          "Data": {},
+          "Timestamp": "2024-07-30T21:18:53.852092407+03:00",
+          "Pow": 0
+        },
+        {
+          "Hash": "000b326618ddb311d8180cd0e232623f8e5cdee8d47fbab732a5abcace749810",
+          "PreviousHash": "9304e8c72d440d421b3bc4b7675a6ebb6feb08f87855a9e0ffbc81328b66101d",
+          "Data": {
+            "amount": 10,
+            "from": "Alice",
+            "to": "Bob"
+          },
+          "Timestamp": "2024-07-30T21:18:53.852395199+03:00",
+          "Pow": 1504
+        }
+      ]
+    }
+  ]
+}

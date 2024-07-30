@@ -6,41 +6,34 @@ import (
 )
 
 func main() {
-	// Create a new blockchain instance with a mining difficulty of 2
-	bc, err := blockChain.CreateBlockchain(2)
+	// Define the path to the JSON file
+	filePath := "./blockchain.json"
+
+	// Create a new blockchain instance with a mining difficulty of 3
+	bc, err := blockChain.CreateBlockchain(3, filePath)
 	if err != nil {
 		fmt.Printf("Failed to create blockchain: %v\n", err)
 		return
 	}
 
-	// Load existing blocks from the database
-	err = bc.LoadBlocks()
+	// Add a block to the blockchain
+	err = bc.AddBlock(map[string]interface{}{"for": "Alice", "to": "Bob", "amount": 10, "name": "Tomlee"})
 	if err != nil {
-		fmt.Printf("Failed to load blocks: %v\n", err)
+		fmt.Printf("Failed to add block: %v\n", err)
 		return
 	}
-
-	// Add blocks to the blockchain
-	// err = bc.AddBlock(map[string]interface{}{"from": "Alice", "to": "Bob", "amount": 10})
-	// if err != nil {
-	// 	fmt.Printf("Failed to add block: %v\n", err)
-	// 	return
-	// }
-
-	// err = bc.AddBlock(map[string]interface{}{"from": "Bob", "to": "Charlie", "amount": 5})
-	// if err != nil {
-	// 	fmt.Printf("Failed to add block: %v\n", err)
-	// 	return
-	// }
 
 	// Validate the blockchain
 	fmt.Println("Blockchain valid:", bc.IsValid())
 
 	// View blocks in the blockchain
 	fmt.Println("Viewing blocks:")
-	err = bc.ViewBlocks()
-	if err != nil {
-		fmt.Printf("Failed to view blocks: %v\n", err)
-		return
+	for _, block := range bc.Chain {
+		fmt.Printf("Hash: %s\n", block.Hash)
+		fmt.Printf("Previous Hash: %s\n", block.PreviousHash)
+		fmt.Printf("Data: %v\n", block.Data)
+		fmt.Printf("Timestamp: %s\n", block.Timestamp)
+		fmt.Printf("Proof of Work: %d\n", block.Pow)
+		fmt.Println()
 	}
 }
