@@ -57,7 +57,8 @@ func main() {
 			routes.ErrorHandler(w, r)
 		}
 	})
-
+	assets := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
 	fmt.Println("server listening on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }
