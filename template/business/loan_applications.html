@@ -113,9 +113,8 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Loan Applications</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newApplicationModal">
-              <i class='bx bx-plus'></i> New Application
-            </button>
+            <a href="/mfis" class="btn btn-primary btn-lg mt-3">Apply for a Loan</a>
+
           </div>
         </div>
 
@@ -174,49 +173,6 @@
     </div>
   </div>
 
-  <!-- New Application Modal -->
-  <div class="modal fade" id="newApplicationModal" tabindex="-1" aria-labelledby="newApplicationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newApplicationModalLabel">New Loan Application</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="newLoanApplicationForm">
-            <div class="mb-3">
-              <label for="loanAmount" class="form-label">Loan Amount</label>
-              <input type="number" class="form-control" id="loanAmount" required>
-            </div>
-            <div class="mb-3">
-              <label for="loanPurpose" class="form-label">Loan Purpose</label>
-              <select class="form-select" id="loanPurpose" required>
-                <option value="">Select a purpose</option>
-                <option value="Inventory Purchase">Inventory Purchase</option>
-                <option value="Equipment Upgrade">Equipment Upgrade</option>
-                <option value="Working Capital">Working Capital</option>
-                <option value="Expansion">Business Expansion</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="loanTerm" class="form-label">Loan Term (months)</label>
-              <input type="number" class="form-control" id="loanTerm" required>
-            </div>
-            <div class="mb-3">
-              <label for="businessDescription" class="form-label">Business Description</label>
-              <textarea class="form-control" id="businessDescription" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="financialStatements" class="form-label">Upload Financial Statements</label>
-              <input type="file" class="form-control" id="financialStatements" accept=".pdf,.doc,.docx,.xls,.xlsx">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="submitApplication()">Submit Application</button>
-        </div>
       </div>
     </div>
   </div>
