@@ -87,22 +87,7 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 
 	if isUser {
 		BusinessHandler(w, r)
-	} else {
-		RegisterHandler(w, r)
-	}
-	// fmt.Println(userProfile)
-	// Render template
-	// tpl, err := template.ParseFiles("template/auth/auth.html")
-	// if err != nil {
-	// 	http.Error(w, "Error loading template", http.StatusInternalServerError)
-	// 	fmt.Println("Error parsing file:", err)
-	// 	return
-	// }
-
-	// if err := tpl.Execute(w, userProfile); err != nil {
-	// 	http.Error(w, "Error rendering template", http.StatusInternalServerError)
-	// 	fmt.Println("Error executing template:", err)
-	// }
+	} 
 }
 
 func BusinessHandler(w http.ResponseWriter,  r *http.Request) {
