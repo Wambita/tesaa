@@ -3,19 +3,19 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"tesaa/routes"
 	"text/template"
+
+	"tesaa/routes"
 )
 
 func main() {
-
 	template.ParseGlob("template/*.html")
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
 		switch path {
-		case "/": 
+		case "/":
 			routes.HomeHandler(w, r)
 
 		case "/about":
@@ -24,6 +24,7 @@ func main() {
 		case "/error":
 			routes.ErrorHandler(w, r)
 		case "/register":
+
 			routes.RegisterHandler(w, r)
 
 		case "/login":
@@ -37,7 +38,7 @@ func main() {
 
 		case "/records":
 			routes.MfiReportHandler(w, r)
-		
+
 		case "/download":
 			routes.MfiReportDownloadHandler(w, r)
 
@@ -48,5 +49,4 @@ func main() {
 
 	fmt.Println("server listening on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
-
 }
