@@ -177,3 +177,24 @@ func MfiReportDownloadHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi/download.html"))
 	tmpl.Execute(w, nil)
 }
+
+// business pages routes
+func BusinessActiveLoansHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/active_loans.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessProfileHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/business_profile.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessLoanApplicationHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/loan_applications.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessTransactionsHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/transactions.html"))
+	tmpl.Execute(w, nil)
+}
