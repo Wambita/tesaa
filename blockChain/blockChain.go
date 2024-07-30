@@ -2,6 +2,8 @@ package blockchain
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/dgraph-io/badger"
 )
@@ -21,6 +23,12 @@ type BlockChainIterator struct {
 }
 
 func InitBlockChain() *BlockChain {
+
+	err := os.MkdirAll("./tmp", os.ModePerm)
+	if err != nil {
+		log.Panicf("Failed to create directory: %v", err)
+	}
+
 	var lastHash []byte
 
 	opts := badger.DefaultOptions(dbPath)
@@ -56,7 +64,7 @@ func InitBlockChain() *BlockChain {
 	return &blockchain
 }
 
-func (chain *BlockChain) AddBlock(data string) {
+func (chain *BlockChain) AddBlock(data Transaction) {
 	var lastHash []byte
 
 	err := chain.Database.View(func(txn *badger.Txn) error {

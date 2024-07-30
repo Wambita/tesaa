@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math"
@@ -36,11 +37,20 @@ func NewProof(b *Block) *ProofOfWork {
 	return pow
 }
 
+func serializeTransactions(transactions Transaction) []byte {
+    data, err := json.Marshal(transactions)
+    if err != nil {
+        log.Panic(err)
+    }
+    return data
+}
+
+
 func (pow *ProofOfWork) InitData(nonce int) []byte {
 	data := bytes.Join(
 		[][]byte{
 			pow.Block.PrevHash,
-			pow.Block.Data,
+			serializeTransactions(pow.Block.Data),
 			ToHex(int64(nonce)),
 			ToHex(int64(Deficulty)),
 		},

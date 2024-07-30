@@ -6,24 +6,21 @@ import (
 	"log"
 )
 
-
+type Transaction struct {
+	From   string
+	To     string
+	Amount string
+}
 
 type Block struct {
 	Hash     []byte
-	Data     []byte
+	Data     Transaction
 	PrevHash []byte
 	Nonce    int
 }
 
-// func (b *Block) DeriveHash() {
-// 	info := bytes.Join([][]byte{b.Data, b.PrevHash}, []byte{})
-// 	hash := sha256.Sum256(info)
-// 	b.Hash = hash[:]
-// }
-
-func CreateBlock(data string, prevHash []byte) *Block {
-	block := &Block{[]byte{}, []byte(data), prevHash, 0}
-	// block.DeriveHash()
+func CreateBlock(data Transaction, prevHash []byte) *Block {
+	block := &Block{[]byte{}, data, prevHash, 0}
 	pow := NewProof(block)
 	nonce, hash := pow.Run()
 
@@ -32,13 +29,16 @@ func CreateBlock(data string, prevHash []byte) *Block {
 	return block
 }
 
-
-
 func Genesis() *Block {
-	return CreateBlock("Genesis", []byte{})
+	data := Transaction{
+		"Tom",
+		"Dan",
+		"hello",
+	}
+	return CreateBlock(data, []byte{})
 }
 
-func (b *Block) Serialized()[]byte{
+func (b *Block) Serialized() []byte {
 	var res bytes.Buffer
 	encoder := gob.NewEncoder(&res)
 
@@ -48,7 +48,7 @@ func (b *Block) Serialized()[]byte{
 	return res.Bytes()
 }
 
-func Deserialize(data []byte) *Block{
+func Deserialize(data []byte) *Block {
 	var block Block
 
 	decoder := gob.NewDecoder(bytes.NewReader(data))
@@ -60,8 +60,8 @@ func Deserialize(data []byte) *Block{
 	return &block
 }
 
-func Handle(err error){
-	if err != nil{
+func Handle(err error) {
+	if err != nil {
 		log.Panic(err)
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -27,10 +28,22 @@ func (cli *CommandLine) validateArgs() {
 	}
 }
 
+// func (cli *CommandLine) addBlock(data []blockchain.Transaction) {
+// 	cli.blockChain.AddBlock(data)
+// 	fmt.Println("Added Block!")
+// }
+
 func (cli *CommandLine) addBlock(data string) {
-	cli.blockChain.AddBlock(data)
-	fmt.Println("Added Block!")
+    var transactions blockchain.Transaction
+    err := json.Unmarshal([]byte(data), &transactions)
+    if err != nil {
+        fmt.Println("Error parsing block data:", err)
+        return
+    }
+    cli.blockChain.AddBlock(transactions)
+    fmt.Println("Added Block!")
 }
+
 
 func (cli *CommandLine) printChain() {
 	iter := cli.blockChain.Iterator()
@@ -50,37 +63,70 @@ func (cli *CommandLine) printChain() {
 	}
 }
 
+// func (cli *CommandLine) run() {
+// 	cli.validateArgs()
+
+// 	addBlockCmd := flag.NewFlagSet("add", flag.ExitOnError)
+// 	printChainCmd := flag.NewFlagSet("print", flag.ExitOnError)
+// 	addBlockData := addBlockCmd.String("block", "", "Block data")
+
+// 	switch os.Args[1]{
+// 	case "add":
+// 		err := addBlockCmd.Parse(os.Args[2:])
+// 		blockchain.Handle(err)
+// 	case "print":
+// 		err := printChainCmd.Parse(os.Args[2:])
+// 		blockchain.Handle(err)
+// 	default:
+// 		cli.printUsage()
+// 		runtime.Goexit()
+// 	}
+
+// 	if addBlockCmd.Parsed(){
+// 		if *addBlockData == ""{
+// 			addBlockCmd.Usage()
+// 			runtime.Goexit()
+// 		}
+// 		cli.addBlock(*addBlockData)
+// 	}
+
+// 	if printChainCmd.Parsed(){
+// 		cli.printChain()
+// 	}
+// }
+
 func (cli *CommandLine) run() {
-	cli.validateArgs()
+    cli.validateArgs()
 
-	addBlockCmd := flag.NewFlagSet("add", flag.ExitOnError)
-	printChainCmd := flag.NewFlagSet("print", flag.ExitOnError)
-	addBlockData := addBlockCmd.String("block", "", "Block data")
+    addBlockCmd := flag.NewFlagSet("add", flag.ExitOnError)
+    printChainCmd := flag.NewFlagSet("print", flag.ExitOnError)
+    addBlockData := addBlockCmd.String("block", "", "Block data")
 
-	switch os.Args[1]{
-	case "add":
-		err := addBlockCmd.Parse(os.Args[2:])
-		blockchain.Handle(err)
-	case "print":
-		err := printChainCmd.Parse(os.Args[2:])
-		blockchain.Handle(err)
-	default:
-		cli.printUsage()
-		runtime.Goexit()
-	}
+    switch os.Args[1] {
+    case "add":
+        err := addBlockCmd.Parse(os.Args[2:])
+        blockchain.Handle(err)
+    case "print":
+        err := printChainCmd.Parse(os.Args[2:])
+        blockchain.Handle(err)
+    default:
+        cli.printUsage()
+        runtime.Goexit()
+    }
 
-	if addBlockCmd.Parsed(){
-		if *addBlockData == ""{
-			addBlockCmd.Usage()
-			runtime.Goexit()
-		}
-		cli.addBlock(*addBlockData)
-	}
+    if addBlockCmd.Parsed() {
+        if *addBlockData == "" {
+            addBlockCmd.Usage()
+            runtime.Goexit()
+        }
+        cli.addBlock(*addBlockData)
+    }
 
-	if printChainCmd.Parsed(){
-		cli.printChain()
-	}
+    if printChainCmd.Parsed() {
+        cli.printChain()
+    }
 }
+
 
 func main() {
 	defer os.Exit(0)
