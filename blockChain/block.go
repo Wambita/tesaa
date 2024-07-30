@@ -1,4 +1,4 @@
-package blockchain
+package blockChain
 
 import (
 	"crypto/sha256"
@@ -13,21 +13,20 @@ import (
 )
 
 type Block struct {
-	data         map[string]interface{}
-	hash         string
-	previousHash string
-	timestamp    time.Time
-	pow          int
+	Hash         string
+	PreviousHash string
+	Data         map[string]interface{}
+	Timestamp    time.Time
+	Pow          int
 }
 
 type Blockchain struct {
-	genesisBlock Block
-	chain        []Block
-	difficulty   int
-	db           *sql.DB
+	Chain      []Block
+	Difficulty int
+	DB         *sql.DB
 }
 
-// Create a new SQLite database and initialize the schema
+// InitializeDatabase sets up the SQLite database and schema
 func InitializeDatabase() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", "./blockchain.db")
 	if err != nil {
@@ -50,39 +49,58 @@ func InitializeDatabase() (*sql.DB, error) {
 	return db, nil
 }
 
-func (b *Block) calculateHash() string {
-	data, _ := json.Marshal(b.data)
-	blockData := b.previousHash + string(data) + b.timestamp.String() + strconv.Itoa(b.pow)
-	blockHash := sha256.Sum256([]byte(blockData))
-	return fmt.Sprintf("%x", blockHash)
-}
-
-func (b *Block) mine(difficulty int) {
-	for !strings.HasPrefix(b.hash, strings.Repeat("0", difficulty)) {
-		b.pow++
-		b.hash = b.calculateHash()
+// NewBlock creates a new block with the given data and previous hash
+func NewBlock(data map[string]interface{}, previousHash string, difficulty int) Block {
+	block := Block{
+		Data:         data,
+		PreviousHash: previousHash,
+		Timestamp:    time.Now(),
 	}
+	block.Pow = block.mine(difficulty)
+	block.Hash = block.calculateHash()
+	return block
 }
 
+// calculateHash computes the hash of the block
+func (b *Block) calculateHash() string {
+	data, _ := json.Marshal(b.Data)
+	blockData := b.PreviousHash + string(data) + b.Timestamp.String() + strconv.Itoa(b.Pow)
+	hash := sha256.Sum256([]byte(blockData))
+	return fmt.Sprintf("%x", hash)
+}
+
+// mine performs proof-of-work for the block
+func (b *Block) mine(difficulty int) int {
+	prefix := strings.Repeat("0", difficulty)
+	for !strings.HasPrefix(b.calculateHash(), prefix) {
+		b.Pow++
+	}
+	return b.Pow
+}
+
+// CreateBlockchain initializes a new blockchain with a genesis block
 func CreateBlockchain(difficulty int) (*Blockchain, error) {
 	db, err := InitializeDatabase()
 	if err != nil {
 		return nil, err
 	}
 
-	genesisBlock := Block{
-		hash:      "0",
-		timestamp: time.Now(),
-	}
-
 	blockchain := &Blockchain{
-		genesisBlock: genesisBlock,
-		chain:        []Block{genesisBlock},
-		difficulty:   difficulty,
-		db:           db,
+		Difficulty: difficulty,
+		DB:         db,
 	}
 
-	// Store the genesis block in the database
+	genesisBlock := Block{
+		Hash:         "0",
+		PreviousHash: "",
+		Data:         map[string]interface{}{},
+		Timestamp:    time.Now(),
+		Pow:          0,
+	}
+	genesisBlock.Hash = genesisBlock.calculateHash()
+
+	blockchain.Chain = append(blockchain.Chain, genesisBlock)
+
 	err = blockchain.storeBlock(genesisBlock)
 	if err != nil {
 		return nil, err
@@ -91,21 +109,32 @@ func CreateBlockchain(difficulty int) (*Blockchain, error) {
 	return blockchain, nil
 }
 
-func (b *Blockchain) storeBlock(block Block) error {
-	data, _ := json.Marshal(block.data)
-	_, err := b.db.Exec(
+// AddBlock adds a new block to the blockchain
+func (bc *Blockchain) AddBlock(data map[string]interface{}) error {
+	lastBlock := bc.Chain[len(bc.Chain)-1]
+	newBlock := NewBlock(data, lastBlock.Hash, bc.Difficulty)
+	bc.Chain = append(bc.Chain, newBlock)
+
+	return bc.storeBlock(newBlock)
+}
+
+// storeBlock saves a block to the database
+func (bc *Blockchain) storeBlock(block Block) error {
+	data, _ := json.Marshal(block.Data)
+	_, err := bc.DB.Exec(
 		`INSERT INTO blocks (hash, previous_hash, data, timestamp, pow) VALUES (?, ?, ?, ?, ?)`,
-		block.hash,
-		block.previousHash,
+		block.Hash,
+		block.PreviousHash,
 		string(data),
-		block.timestamp.Format(time.RFC3339),
-		block.pow,
+		block.Timestamp.Format(time.RFC3339),
+		block.Pow,
 	)
 	return err
 }
 
-func (b *Blockchain) LoadBlocks() error {
-	rows, err := b.db.Query(`SELECT hash, previous_hash, data, timestamp, pow FROM blocks`)
+
+func (bc *Blockchain) ViewBlocks() error {
+	rows, err := bc.DB.Query(`SELECT hash, previous_hash, data, timestamp, pow FROM blocks`)
 	if err != nil {
 		return err
 	}
@@ -116,51 +145,76 @@ func (b *Blockchain) LoadBlocks() error {
 		var data string
 		var timestamp string
 
-		err := rows.Scan(&block.hash, &block.previousHash, &data, &timestamp, &block.pow)
+		err := rows.Scan(&block.Hash, &block.PreviousHash, &data, &timestamp, &block.Pow)
 		if err != nil {
 			return err
 		}
 
-		block.data = make(map[string]interface{})
-		json.Unmarshal([]byte(data), &block.data)
-		block.timestamp, _ = time.Parse(time.RFC3339, timestamp)
+		block.Data = make(map[string]interface{})
+		err = json.Unmarshal([]byte(data), &block.Data)
+		if err != nil {
+			return err
+		}
+		block.Timestamp, _ = time.Parse(time.RFC3339, timestamp)
 
-		b.chain = append(b.chain, block)
+		// Print block details
+		fmt.Printf("Hash: %s\n", block.Hash)
+		fmt.Printf("Previous Hash: %s\n", block.PreviousHash)
+		fmt.Printf("Data: %v\n", block.Data)
+		fmt.Printf("Timestamp: %s\n", block.Timestamp)
+		fmt.Printf("Proof of Work: %d\n", block.Pow)
+		fmt.Println()
+	}
+
+	return nil
+}
+
+
+// LoadBlocks loads blocks from the database into the blockchain
+func (bc *Blockchain) LoadBlocks() error {
+	rows, err := bc.DB.Query(`SELECT hash, previous_hash, data, timestamp, pow FROM blocks`)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var block Block
+		var data string
+		var timestamp string
+
+		err := rows.Scan(&block.Hash, &block.PreviousHash, &data, &timestamp, &block.Pow)
+		if err != nil {
+			return err
+		}
+
+		block.Data = make(map[string]interface{})
+		json.Unmarshal([]byte(data), &block.Data)
+		block.Timestamp, _ = time.Parse(time.RFC3339, timestamp)
+
+		bc.Chain = append(bc.Chain, block)
 	}
 	return nil
 }
 
-func (b *Blockchain) AddBlock(from, to string, amount float64) {
-	blockData := map[string]interface{}{
-		"from":   from,
-		"to":     to,
-		"amount": amount,
+// IsValid checks if the blockchain is valid
+func (bc *Blockchain) IsValid() bool {
+	if len(bc.Chain) == 0 {
+		return false
 	}
 
-	lastBlock := b.chain[len(b.chain)-1]
-	newBlock := Block{
-		data:         blockData,
-		previousHash: lastBlock.hash,
-		timestamp:    time.Now(),
-	}
+	for i := 1; i < len(bc.Chain); i++ {
+		currentBlock := bc.Chain[i]
+		previousBlock := bc.Chain[i-1]
 
-	newBlock.mine(b.difficulty)
-	b.chain = append(b.chain, newBlock)
+		if currentBlock.Hash != currentBlock.calculateHash() {
+			return false
+		}
 
-	// Store the new block in the database
-	err := b.storeBlock(newBlock)
-	if err != nil {
-		fmt.Printf("Failed to store block: %v\n", err)
-	}
-}
-
-func (b *Blockchain) IsValid() bool {
-	for i := range b.chain[1:] {
-		previousBlock := b.chain[i]
-		currentBlock := b.chain[i+1]
-		if currentBlock.hash != currentBlock.calculateHash() || currentBlock.previousHash != previousBlock.hash {
+		if currentBlock.PreviousHash != previousBlock.Hash {
 			return false
 		}
 	}
+
 	return true
 }
