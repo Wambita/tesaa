@@ -11,17 +11,42 @@ func main() {
 
 	template.ParseGlob("template/*.html")
 
-	http.HandleFunc("/", routes.HomeHandler)
-	http.HandleFunc("/about", routes.AboutHandler)
-	http.HandleFunc("/error", routes.ErrorHandler)
-	http.HandleFunc("/register", routes.RegisterHandler)
-	http.HandleFunc("/login", routes.LoginHandler)
-	http.HandleFunc("/business", routes.BusinessHandler)
-	http.HandleFunc("/mfi", routes.MfiHandler)
-	http.HandleFunc("/records", routes.MfiReportHandler)
-	http.HandleFunc("/download", routes.MfiReportDownloadHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+		path := r.URL.Path
 
-	http.ListenAndServe(":8080", nil)
+		switch path {
+		case "/": 
+			routes.HomeHandler(w, r)
+
+		case "/about":
+			routes.AboutHandler(w, r)
+
+		case "/error":
+			routes.ErrorHandler(w, r)
+		case "/register":
+			routes.RegisterHandler(w, r)
+
+		case "/login":
+			routes.LoginHandler(w, r)
+
+		case "/business":
+			routes.BusinessHandler(w, r)
+
+		case "/mfi":
+			routes.MfiHandler(w, r)
+
+		case "/records":
+			routes.MfiReportHandler(w, r)
+		
+		case "/download":
+			routes.MfiReportDownloadHandler(w, r)
+
+		default:
+			http.NotFound(w, r)
+		}
+	})
+
 	fmt.Println("server listening on http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 
 }

@@ -58,7 +58,7 @@
               <option value="mfi">Microfinance Institution</option>
             </select>
           </div>
-          <form id="loginForm">
+          <form id="loginForm" action="/auth" method="POST">
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
               <input type="email" class="form-control" id="email" required>
@@ -83,7 +83,7 @@
         </div>
       </main>
     
-      <script>
+      <!-- <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
           e.preventDefault();
           const loginType = document.getElementById('loginType').value;
@@ -99,12 +99,12 @@
           // TODO: Implement actual login logic here
           // For now, we'll just redirect to a dashboard page
           if (loginType === 'business') {
-            window.location.href = '/business-dashboard';
+            window.location.href = '/business';
           } else {
-            window.location.href = '/mfi-dashboard';
+            window.location.href = '/mfi';
           }
         });
-      </script>
+      </script> -->
     
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
