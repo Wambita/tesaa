@@ -40,6 +40,8 @@ func main() {
 		
 		case "/download":
 			routes.MfiReportDownloadHandler(w, r)
+		case "/auth":
+			routes.AuthHandler(w, r)
 
 		default:
 			http.NotFound(w, r)
