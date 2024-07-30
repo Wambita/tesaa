@@ -60,13 +60,13 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
 		return
 	}
-	check_user, _ := http.Get(`http://localhost:3000/users?email=%s` + data.Email)
+	check_user, _ := http.Get(`http://192.168.89.102:3000/users?email=%s` + data.Email)
 
 	// fmt.Println(us)
 	if check_user != nil {
 		println("Email already exists")
 	}
-	resp, err := http.Post("http://localhost:3000/users", "application/json", bytes.NewBuffer(jsonData))
+	resp, err := http.Post("http://192.168.89.102:3000/users", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		http.Error(w, "Error posting JSON data", http.StatusInternalServerError)
 		return
@@ -98,7 +98,7 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Email: ", email)
 
 	// Fetch users data
-	url := "http://localhost:3000/users?email=" + email
+	url := "http://192.168.89.102:3000/users?email=" + email
 	res, err := http.Get(url)
 	if err != nil {
 		http.Error(w, "Error fetching data", http.StatusInternalServerError)
@@ -174,5 +174,26 @@ func MfiReportHandler(w http.ResponseWriter, r *http.Request) {
 
 func MfiReportDownloadHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi/download.html"))
+	tmpl.Execute(w, nil)
+}
+
+// business pages routes
+func BusinessActiveLoansHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/active_loans.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessProfileHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/business_profile.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessLoanApplicationHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/loan_applications.html"))
+	tmpl.Execute(w, nil)
+}
+
+func BusinessTransactionsHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/transactions.html"))
 	tmpl.Execute(w, nil)
 }
