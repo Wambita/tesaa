@@ -53,6 +53,11 @@ func main() {
 			routes.BusinessLoanApplicationHandler(w, r)
 		case "/business-transactions":
 			routes.BusinessTransactionsHandler(w, r)
+
+		case "/applyloan":
+			routes.ApplyLoanHandler(w, r)
+		case "/mfis":
+			routes.MsiListHandler(w, r)
 		default:
 			routes.ErrorHandler(w, r)
 		}

@@ -197,3 +197,18 @@ func BusinessTransactionsHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/transactions.html"))
 	tmpl.Execute(w, nil)
 }
+
+func LoanApplicationHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/business/loan_applications.html"))
+	tmpl.Execute(w, nil)
+}
+
+func MsiListHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/mfi/mfis.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ApplyLoanHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/mfi/apply_loan.html"))
+	tmpl.Execute(w, nil)
+}
