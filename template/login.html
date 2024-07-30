@@ -24,6 +24,11 @@
       .login-type-selector {
         margin-bottom: 1rem;
       }
+      .error-message {
+    display: none;
+    color: red;
+    margin-top: 10px;
+}
     </style>
     </head>
     <body>
@@ -71,6 +76,7 @@
               <input type="checkbox" class="form-check-input" id="rememberMe">
               <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
+            <div id="error-message" class="error-message">wrong credentials</div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
           </form>
           <div class="text-center mt-3">
