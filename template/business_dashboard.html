@@ -74,7 +74,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/loan-applications">
+                <a class="nav-link" href="/loan-application">
                   <i class='bx bx-file'></i>
                   Loan Applications
                 </a>
@@ -158,48 +158,14 @@
                         </tr>
                       </thead>
                       <tbody>
+                        {{ range .Loans}}
                         <tr>
-                          <td>May 1, 2023</td>
-                          <td>Loan Repayment</td>
-                          <td class="text-danger">-Ksh. 750</td>
-                          <td><span class="badge bg-success">Completed</span></td>
+                          <td>{{.Date}}</td>
+                          <td>{{.Purpose}}</td>
+                          <td class="text-danger">Ksh. {{.Amount}}</td>
+                          <td><span class="badge bg-success">{{.Status}}</span></td>
                         </tr>
-                        <tr>
-                          <td>Apr 15, 2023</td>
-                          <td>Loan Disbursement</td>
-                          <td class="text-success">+Ksh. 10,000</td>
-                          <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                          <td>Apr 1, 2023</td>
-                          <td>Loan Repayment</td>
-                          <td class="text-danger">-Ksh. 750</td>
-                          <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                          <td>Mar 15, 2023</td>
-                          <td>Loan Application Fee</td>
-                          <td class="text-danger">-Ksh. 50</td>
-                          <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                          <td>Mar 1, 2023</td>
-                          <td>Loan Repayment</td>
-                          <td class="text-danger">-Ksh. 750</td>
-                          <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                          <td>Feb 15, 2023</td>
-                          <td>Late Payment Fee</td>
-                          <td class="text-danger">-Ksh. 25</td>
-                          <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                          <td>Feb 5, 2023</td>
-                          <td>Loan Repayment</td>
-                          <td class="text-danger">-Ksh. 750</td>
-                          <td><span class="badge bg-warning">Late</span></td>
-                        </tr>
+                        {{end}}
                       </tbody>
                     </table>
                   </div>

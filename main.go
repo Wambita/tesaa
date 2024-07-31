@@ -58,6 +58,8 @@ func main() {
 			routes.ApplyLoanHandler(w, r)
 		case "/mfis":
 			routes.MsiListHandler(w, r)
+		case "/process_loan":
+			routes.LoanProcesor(w, r)
 		default:
 			routes.ErrorHandler(w, r)
 		}

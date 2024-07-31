@@ -4,7 +4,23 @@
       "id": "1",
       "email": "test@example.com",
       "password": "100",
-      "institution_type": "business"
+      "institution_type": "business",
+      "loans": [
+        {
+          "id": "loan-1",
+          "date": "2024-07-31",
+          "amount": "14",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-2",
+          "date": "2024-07-31",
+          "amount": "12335",
+          "purpose": "Business",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "2",
@@ -13,176 +29,90 @@
       "institution_type": "microfinance"
     },
     {
-      "id": "7d14",
-      "Email": "w@w.comww",
-      "Password": "cwcq"
+      "id": "9928",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
     },
     {
-      "id": "84eb",
-      "Email": "c@ww.com",
-      "Password": "dx"
+      "id": "9a64",
+      "institution_type": "business",
+      "email": "test77@example.com",
+      "password": "123",
+      "confirm_pass": "123",
+      "type": "Entertainment",
+      "years": "5",
+      "license": "2233RRTED",
+      "kra": "0A78883JKL",
+      "phone": "2233445"
     },
     {
-      "id": "081f",
-      "Email": "wxw@f.com",
-      "Password": "Dbck"
+      "id": "",
+      "email": "x@x.com",
+      "password": "kenyan",
+      "institution_type": "",
+      "account_type": "business",
+      "confirm_pass": "dee",
+      "type": "fefe",
+      "years": "23",
+      "license": "cdscs",
+      "kra": "23A",
+      "phone": "12345733"
     },
     {
-      "id": "d3d2",
-      "Email": "tdsdlfd@gmail.com",
-      "Password": "21432"
+      "id": "",
+      "email": "tes@c.com",
+      "password": "123",
+      "institution_type": "",
+      "account_type": "business",
+      "confirm_pass": "123",
+      "type": "Entertainment",
+      "years": "12",
+      "license": "na",
+      "kra": "12",
+      "phone": "2"
     },
     {
-      "id": "7d13",
-      "Email": "test@example.com",
-      "Password": "100"
-    },
-    {
-      "id": "6a72",
-      "Email": "",
-      "Password": ""
-    },
-    {
-      "id": "e014",
-      "Email": "xww@g.com",
-      "Password": "xw"
-    },
-    {
-      "id": "203a",
-      "Email": "",
-      "Password": ""
-    },
-    {
-      "id": "9a4a",
-      "Email": "test@vexample.com",
-      "Password": "sce"
-    },
-    {
-      "id": "72ef",
-      "Email": "e@c.com",
-      "Password": "cece"
-    },
-    {
-      "id": "b120",
-      "Email": "ce@e.com",
-      "Password": "e"
-    },
-    {
-      "id": "9de3",
-      "Email": "test@example.com",
-      "Password": "sx"
-    },
-    {
-      "id": "fb0c",
-      "Email": "test@example.com",
-      "Password": "sx"
-    },
-    {
-      "id": "1c61",
-      "Email": "",
-      "Password": ""
-    },
-    {
-      "id": "cc4a",
-      "Email": "",
-      "Password": ""
-    },
-    {
-      "id": "6f3f",
-      "Email": "E@gmail.com",
-      "Password": "qwerty",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "23",
-      "License": "good",
-      "Kra": "1234",
-      "Phone": ""
-    },
-    {
-      "id": "6048",
-      "Password": "qwerty",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "23",
-      "License": "good",
-      "Kra": "1234",
-      "Phone": ""
-    },
-    {
-      "id": "838c",
-      "Password": "qwerty",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "12",
-      "License": "Liscence",
-      "Kra": "1234",
-      "Phone": ""
-    },
-    {
-      "id": "9b7f",
-      "Email": "xwxwwce@e.com",
-      "Password": "22232",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "1",
-      "License": "sdcs",
-      "Kra": "32",
-      "Phone": ""
-    },
-    {
-      "id": "a13c",
-      "Email": "ww@r.com",
-      "Password": "ww",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "1234567",
-      "License": "wsdhuijokl",
-      "Kra": "wertyuio",
-      "Phone": ""
-    },
-    {
-      "id": "b79b",
-      "Email": "",
-      "Password": "",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "",
-      "License": "",
-      "Kra": "",
-      "Phone": ""
-    },
-    {
-      "id": "b5cc",
-      "Email": "wambitfana@gmail.com",
-      "Password": "1234",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "2",
-      "License": "dfgtrhyyujyu",
-      "Kra": "zwrryh",
-      "Phone": ""
-    },
-    {
-      "id": "02fb",
-      "Email": "",
-      "Password": "",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "",
-      "License": "",
-      "Kra": "",
-      "Phone": ""
-    },
-    {
-      "id": "92c3",
-      "Email": "wambitafana@gmail.com",
-      "Password": "1234",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "2",
-      "License": "swqdfgahwjdkl",
-      "Kra": "wsrftyghjkl",
-      "Phone": ""
+      "id": "12345",
+      "email": "user@example.com",
+      "password": "securepassword",
+      "institution_type": "business",
+      "loans": [
+        {
+          "id": "loan1",
+          "date": "2024-07-30",
+          "amount": "10000",
+          "purpose": "Expansion",
+          "status": "Approved"
+        },
+        {
+          "id": "loan2",
+          "date": "2024-06-15",
+          "amount": "5000",
+          "purpose": "Equipment",
+          "status": "Approved"
+        },
+        {
+          "id": "loan-3",
+          "date": "2024-07-31",
+          "amount": "345",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-4",
+          "date": "2024-07-31",
+          "amount": "500",
+          "purpose": "Business",
+          "status": "pending"
+        }
+      ]
     }
   ]
 }

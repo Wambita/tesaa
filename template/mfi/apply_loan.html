@@ -163,27 +163,18 @@
         <div class="row justify-content-center">
           <div class="col-md-8">
             <div class="form-container">
-              <div class="user-info mb-4">
-                <h4>Your Information</h4>
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Business Name:</strong> ABC Enterprises</p>
-                <p><strong>Business Type:</strong> Retail</p>
-                <p><strong>Years in Business:</strong> 5</p>
-                <p><strong>Annual Revenue:</strong> KES 5,000,000</p>
-              </div>
-              <form id="loanApplicationForm">
+              <form id="loanApplicationForm" action="/process_loan" method="POST">
+                <div class="user-info mb-4">
+                  <h4>Your Information</h4>
+                  <p><strong>Name:</strong> {{.Email}}</p>
+                  <p><strong>Business Name:</strong> {{.InstitutionType }}</p>
+                  <p><strong>Business Type:</strong> Retail</p>
+                  <p><strong>Years in Business:</strong> 5</p>
+                  <p><strong>Annual Revenue:</strong> KES 5,000,000</p>
+                </div>
                 <div class="mb-3">
                   <label for="loanAmount" class="form-label">Requested Loan Amount (KES)</label>
-                  <input type="number" class="form-control" id="loanAmount" min="50000" max="5000000" required>
-                </div>
-                <div class="mb-4">
-                  <label for="fileUpload" class="form-label">Upload Financial Records</label>
-                  <div id="fileUpload">
-                    <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
-                    <p>Drag and drop your files here or click to browse</p>
-                    <input type="file" id="fileInput" multiple style="display: none;">
-                  </div>
-                  <div id="fileList"></div>
+                  <input type="number" class="form-control" id="loanAmount" max="5000000" name="amount" required>
                 </div>
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="termsAgreement" required>
