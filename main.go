@@ -60,6 +60,8 @@ func main() {
 			routes.MsiListHandler(w, r)
 		case "/process_loan":
 			routes.LoanProcesor(w, r)
+		case "/make-payment":
+			routes.MakePaymentHandler(w, r)
 		default:
 			routes.ErrorHandler(w, r)
 		}

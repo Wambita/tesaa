@@ -2,9 +2,11 @@ package routes
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"text/template"
 	"time"
@@ -39,6 +41,11 @@ type User struct {
 	InstitutionType string `json:"institution_type"`
 	Loans           []Loan `json:"loans"`
 }
+
+const (
+	businessShortCode = "174379"
+	passKey           = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+)
 
 var userProfile User
 
@@ -263,45 +270,169 @@ func LoanProcesor(w http.ResponseWriter, r *http.Request) {
 		Status:  "pending",
 	}
 
-// Append the new loan to the user's loans
-userProfile.Loans = append(userProfile.Loans, newLoan)
+	// Append the new loan to the user's loans
+	userProfile.Loans = append(userProfile.Loans, newLoan)
 
-// Convert userProfile to JSON
-userProfileJSON, err := json.Marshal(userProfile)
-if err != nil {
-	http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
-	return
-}
+	// Convert userProfile to JSON
+	userProfileJSON, err := json.Marshal(userProfile)
+	if err != nil {
+		http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
+		return
+	}
 
-// Prepare the PATCH request to update user profile with the new loan
-url := fmt.Sprintf("http://localhost:3000/users/%s", userProfile.Id)
-req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(userProfileJSON))
-if err != nil {
-	http.Error(w, "Error creating request", http.StatusInternalServerError)
-	return
-}
-req.Header.Set("Content-Type", "application/json")
+	// Prepare the PATCH request to update user profile with the new loan
+	url := fmt.Sprintf("http://localhost:3000/users/%s", userProfile.Id)
+	req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(userProfileJSON))
+	if err != nil {
+		http.Error(w, "Error creating request", http.StatusInternalServerError)
+		return
+	}
+	req.Header.Set("Content-Type", "application/json")
 
-// Execute the request
-client := &http.Client{}
-resp, err := client.Do(req)
-if err != nil {
-	http.Error(w, "Error executing request", http.StatusInternalServerError)
-	return
-}
-defer resp.Body.Close()
+	// Execute the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Error executing request", http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
 
-// Handle response
-if resp.StatusCode != http.StatusOK {
-	http.Error(w, "Failed to update user profile", resp.StatusCode)
-	return
-}
+	// Handle response
+	if resp.StatusCode != http.StatusOK {
+		http.Error(w, "Failed to update user profile", resp.StatusCode)
+		return
+	}
 
-// fmt.Fprintln(w, "Loan added and user profile updated successfully")
+	// fmt.Fprintln(w, "Loan added and user profile updated successfully")
 
 	// fmt.Fprintln(w, "Loan added successfully")
 	fmt.Println("Blockchain valid:", bc.IsValid())
 
 	tmpl := template.Must(template.ParseFiles("auth/auth.html"))
 	tmpl.Execute(w, "Processing Your Loan...")
+}
+
+func generateTimestamp() string {
+	now := time.Now()
+	return now.Format("20060102150405")
+}
+
+func base64Encode(str string) string {
+	return base64.StdEncoding.EncodeToString([]byte(str))
+}
+
+// FetchAccessToken retrieves an access token from Safaricom's OAuth endpoint
+func FetchAccessToken() (string, error) {
+	url := "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+	method := "GET"
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", "Basic eUFHd3U0UnJoQ2tSNjBWUndYQUdHdlJVampxOHd0b2dBc1ZaaUdJbGhhRlVmd3dCOjdQbkxiVnpqeXBJWGUycWNOOGRpbXpHeXFSR1VRODVteUVzZ3RoZWp6Z0hTMHVqOWpvSTFUWVZRR2UyRWFBenE=")
+
+	res, err := client.Do(req)
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	fmt.Println(string(body)) // Read and log the response body
+	if err != nil {
+		return "", fmt.Errorf("failed to read response body: %v", err)
+	}
+	fmt.Printf("Response Body: %s\n", body)
+
+	// Parse JSON response
+	var response map[string]interface{}
+	if err := json.Unmarshal(body, &response); err != nil {
+		return "", fmt.Errorf("failed to parse response: %v", err)
+	}
+
+	// Extract access token
+	accessToken, ok := response["access_token"].(string)
+	if !ok {
+		return "", fmt.Errorf("access token not found in response")
+	}
+
+	return accessToken, nil
+}
+
+func makePayment(accessToken, amount, phoneNumber string) error {
+	timestamp := generateTimestamp()
+	passwordToEncode := businessShortCode + passKey + timestamp
+	base64Password := base64Encode(passwordToEncode)
+
+	payload := map[string]interface{}{
+		"BusinessShortCode": businessShortCode,
+		"Password":          base64Password,
+		"Timestamp":         timestamp,
+		"TransactionType":   "CustomerPayBillOnline",
+		"Amount":            amount,
+		"PartyA":            phoneNumber,
+		"PartyB":            businessShortCode,
+		"PhoneNumber":       phoneNumber,
+		"CallBackURL":       "https://waducbo.com/path",
+		"AccountReference":  "TESAA",
+		"TransactionDesc":   "LOAN",
+	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("payment request failed: %s", resp.Status)
+	}
+
+	var result map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return err
+	}
+
+	fmt.Println("Payment Response:", result)
+	return nil
+}
+
+func MakePaymentHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.ParseForm()
+	amount := r.FormValue("amount")
+	phoneNumber := r.FormValue("phoneNumber")
+
+	accessToken, err := FetchAccessToken()
+	if err != nil {
+		http.Error(w, "Failed to fetch access token", http.StatusInternalServerError)
+		fmt.Println("Error fetching access token:", err)
+		return
+	}
+
+	if err := makePayment(accessToken, amount, phoneNumber); err != nil {
+		http.Error(w, "Failed to make payment", http.StatusInternalServerError)
+		fmt.Println("Error making payment:", err)
+		return
+	}
+
+	fmt.Fprintf(w, "Payment request processed successfully")
 }
