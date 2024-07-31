@@ -219,6 +219,186 @@
                 <h4>Equity Bank</h4>
                 <p>Specializes in microloans for small businesses and agricultural projects.</p>
                 <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#equityBankModal">View Loan Packages</button>
+      .nav-link {
+        font-weight: 500;
+        transition: color 0.3s ease;
+        font-size: 1.1rem;
+      }
+    
+      .nav-link:hover {
+        color: var(--accent-color) !important;
+      }
+    
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        transition: all 0.3s ease;
+      }
+    
+      .btn-secondary {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        transition: all 0.3s ease;
+      }
+    
+      .btn-primary:hover, .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+    
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+      }
+    
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      }
+    
+      .feature-icon {
+        font-size: 3.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+    
+      footer {
+        background-color: var(--dark-bg);
+        color: white;
+        padding: 3rem 0;
+        margin: 20px;
+      }
+    
+      .social-icon {
+        font-size: 1.8rem;
+        margin: 0 10px;
+        color: white;
+        transition: color 0.3s ease;
+      }
+    
+      .social-icon:hover {
+        color: var(--accent-color);
+      }
+    
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+    
+      h3 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+    
+      p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+    
+      .mfi-logo {
+        max-width: 100px;
+        height: auto;
+        margin-bottom: 1rem;
+      }
+    
+      .modal-dialog {
+        max-width: 800px;
+      }
+    
+      .loan-package {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+      }
+    
+      .loan-package:last-child {
+        border-bottom: none;
+      }
+    
+      @media (max-width: 768px) {
+        body {
+          font-size: 16px;
+        }
+      }
+    </style>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="/">TESAA</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#mfi-list">MFI List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+      <header class="py-5 bg-light text-center" style="margin-top: 96px;">
+        <div class="container">
+          <h1 class="display-4">Microfinance Institutions</h1>
+          <p class="lead">Discover our network of trusted microfinance partners</p>
+        </div>
+      </header>
+    
+      <main>
+        <section id="about" class="py-5">
+          <div class="container">
+            <h2 class="text-center mb-4">About Our MFI Network</h2>
+            <p class="text-center">TESAA partners with a diverse range of microfinance institutions (MFIs) to provide accessible financial services to underserved communities. Our network includes both established and emerging MFIs, all committed to fostering economic growth and financial inclusion.</p>
+          </div>
+        </section>
+    
+        <section id="mfi-list" class="py-5 bg-white">
+          <div class="container">
+            <h2 class="text-center mb-5">Our MFI Partners</h2>
+            <div class="row g-4">
+              <div class="col-md-4 col-sm-6">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <img src="/assets/equity.png" alt="Equity Bank Logo" class="mfi-logo">
+                    <h4>Equity Bank</h4>
+                    <p>Specializes in microloans for small businesses and agricultural projects.</p>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#equityBankModal">View Loan Packages</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <img src="/assets/women.png" alt="Kenya Women Microfinance Bank Logo" class="mfi-logo">
+                    <h4>Kenya Women Microfinance Bank</h4>
+                    <p>Focuses on empowering women entrepreneurs through tailored financial services.</p>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#kwftModal">View Loan Packages</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <img src="/assets/faulu.png" alt="Faulu Microfinance Bank Logo" class="mfi-logo">
+                    <h4>Faulu Microfinance Bank</h4>
+                    <p>Provides a wide range of financial products for individuals and SMEs.</p>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fauluModal">View Loan Packages</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

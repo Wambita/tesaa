@@ -201,6 +201,42 @@
               <i class='bx bx-calendar'></i>
               This week
             </button>
+      <div class="row">
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="/business">
+                  <i class='bx bxs-dashboard'></i>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/loan-application">
+                  <i class='bx bx-file'></i>
+                  Loan Applications
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/active-loans">
+                  <i class='bx bx-money'></i>
+                  Active Loans
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/business-transactions">
+                  <i class='bx bx-transfer'></i>
+                  Transactions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/business-profile">
+                  <i class='bx bx-user'></i>
+                  Profile
+                </a>
+              </li>
+            </ul>
+
           </div>
         </div>
 
@@ -316,6 +352,35 @@
                     <span class="badge bg-primary rounded-pill">Ksh. 750</span>
                   </li>
                 </ul>
+  
+          <div class="row mt-4">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Transaction History</h5>
+                  <div class="transaction-list">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Description</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{ range .Loans}}
+                        <tr>
+                          <td>{{.Date}}</td>
+                          <td>{{.Purpose}}</td>
+                          <td class="text-danger">Ksh. {{.Amount}}</td>
+                          <td><span class="badge bg-success">{{.Status}}</span></td>
+                        </tr>
+                        {{end}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card mt-3">
