@@ -1,4 +1,4 @@
-<html><head>
+<html><head><base href="/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TESAA - Connect, Lend, Grow</title>
@@ -19,17 +19,16 @@
       font-family: 'Poppins', sans-serif;
       color: var(--text-color);
       background-color: var(--light-bg);
-      font-size: 16px;
-      margin: 20px;
+      font-size: 14px;
+      margin: 0;
     }
   
     .navbar {
       background-color: var(--dark-bg) !important;
-      padding: 25px;
-      margin: 0 20px;
+      padding: 15px;
     }
     .navbar-brand {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: 500;
       color: #3498db !important;
       margin-right: auto;
@@ -37,27 +36,16 @@
     }
     .nav-link {
       color: white !important;
-    }
-  
-    .nav-link {
       font-weight: 500;
       transition: color 0.3s ease;
-      font-size: 1.1rem;
+      font-size: 0.9rem;
     }
   
     .nav-link:hover {
       color: var(--accent-color) !important;
     }
   
-    .btn-primary {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-      transition: all 0.3s ease;
-    }
-  
-    .btn-secondary {
-      background-color: var(--secondary-color);
-      border-color: var(--secondary-color);
+    .btn-primary, .btn-secondary {
       transition: all 0.3s ease;
     }
   
@@ -76,14 +64,14 @@
     }
   
     .card:hover {
-      transform: translateY(-10px);
+      transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
     }
   
     .feature-icon {
-      font-size: 3.5rem;
+      font-size: 2.5rem;
       color: var(--primary-color);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
   
     #success-stories {
@@ -94,29 +82,27 @@
     .stats-box {
       background-color: white;
       border-radius: 15px;
-      padding: 2rem;
+      padding: 1.5rem;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
   
     .stats-box h3 {
-      font-size: 3rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--primary-color);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
   
     footer {
       background-color: var(--dark-bg);
       color: white;
-      padding: 3rem 0;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      padding: 2rem 0;
     }
   
     .social-icon {
-      font-size: 1.8rem;
-      margin: 0 10px;
+      font-size: 1.4rem;
+      margin: 0 8px;
       color: white;
       transition: color 0.3s ease;
     }
@@ -127,22 +113,20 @@
   
     .cta-section {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      padding: 80px 0;
-      margin-top: 5px;
-      margin-bottom: 5px;
+      padding: 60px 0;
     }
   
     .testimonial-img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
   
     .carousel-item {
-      height: 70vh;
-      min-height: 300px;
+      height: 60vh;
+      min-height: 250px;
       background: no-repeat center center scroll;
       -webkit-background-size: cover;
       -moz-background-size: cover;
@@ -155,37 +139,37 @@
     }
   
     .carousel-caption h5 {
-      font-size: 48px;
+      font-size: 36px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 25px;
+      margin-top: 20px;
     }
   
     .carousel-caption p {
       width: 75%;
       margin: auto;
-      font-size: 20px;
-      line-height: 1.9;
+      font-size: 16px;
+      line-height: 1.6;
     }
   
     h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-    }
-  
-    h3 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
     }
   
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+  
     p {
-      font-size: 1.4rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.6;
     }
   
     @media (max-width: 768px) {
       .carousel-item {
-        height: 50vh;
+        height: 40vh;
       }
   
       .carousel-caption {
@@ -193,20 +177,20 @@
       }
   
       .carousel-caption h5 {
-        font-size: 36px;
+        font-size: 28px;
       }
   
       .carousel-caption p {
-        font-size: 18px;
+        font-size: 14px;
         width: 90%;
       }
   
       .stats-box h3 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
       }
   
       body {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   </style>
@@ -214,7 +198,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/">TESAA</a>
+        <a class="navbar-brand" href="/">Tesaa</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -243,7 +227,7 @@
       </div>
     </nav>
   
-    <header style="margin-top: 96px;">
+    <header style="margin-top: 76px;">
       <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -290,7 +274,7 @@
     <main>
       <section id="platform-stats" class="py-5">
         <div class="container">
-          <h2 class="text-center mb-5">Our Impact</h2>
+          <h2 class="text-center mb-4">Our Impact</h2>
           <div class="row g-4">
             <div class="col-6 col-md-3">
               <div class="stats-box">
@@ -322,14 +306,14 @@
   
       <section id="borrowers" class="py-5 bg-white">
         <div class="container">
-          <h2 class="text-center mb-5">For Borrowers</h2>
+          <h2 class="text-center mb-4">For Borrowers</h2>
           <div class="row align-items-center">
             <div class="col-md-6 mb-4 mb-md-0">
               <img src="/assets/businessowner.jpg" alt="Borrower using laptop" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-md-6">
-              <h3 class="mb-4">Get the Funding You Need</h3>
-              <p class="lead mb-4">Access a wide range of lenders and loan options tailored to your needs.</p>
+              <h3 class="mb-3">Get the Funding You Need</h3>
+              <p class="lead mb-3">Access a wide range of lenders and loan options tailored to your needs.</p>
               <ul class="list-unstyled">
                 <li><i class="fas fa-check-circle text-success me-2"></i> Competitive rates</li>
                 <li><i class="fas fa-check-circle text-success me-2"></i> Flexible terms</li>
@@ -344,14 +328,14 @@
   
       <section id="lenders" class="py-5">
         <div class="container">
-          <h2 class="text-center mb-5">For Lenders</h2>
+          <h2 class="text-center mb-4">For Lenders</h2>
           <div class="row align-items-center">
             <div class="col-md-6 order-md-2 mb-4 mb-md-0">
               <img src="../assets/Microfinance-Loans-scaled.jpg" alt="Lender analyzing investments" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-md-6 order-md-1">
-              <h3 class="mb-4">Invest in Real People, Real Impact</h3>
-              <p class="lead mb-4">Make a difference while earning returns.</p>
+              <h3 class="mb-3">Invest in Real People, Real Impact</h3>
+              <p class="lead mb-3">Make a difference while earning returns.</p>
               <ul class="list-unstyled">
                 <li><i class="fas fa-chart-line text-primary me-2"></i> Competitive returns</li>
                 <li><i class="fas fa-shield-alt text-primary me-2"></i> Vetted borrowers</li>
@@ -366,7 +350,7 @@
   
       <section id="loan-types" class="py-5 bg-white">
         <div class="container">
-          <h2 class="text-center mb-5">Loan Types</h2>
+          <h2 class="text-center mb-4">Loan Types</h2>
           <div class="row g-4">
             <div class="col-md-4 col-sm-6">
               <div class="card h-100">
@@ -428,7 +412,7 @@
   
       <section id="success-stories" class="py-5">
         <div class="container">
-          <h2 class="text-center mb-5">Success Stories</h2>
+          <h2 class="text-center mb-4">Success Stories</h2>
           <div class="row g-4">
             <div class="col-md-4">
               <div class="card h-100">
@@ -463,8 +447,8 @@
   
       <section id="cta" class="cta-section py-5 text-white">
         <div class="container text-center">
-          <h2 class="mb-4">Ready to Get Started?</h2>
-          <p class="lead mb-4">Join TESAA today and be part of a global community making a difference.</p>
+          <h2 class="mb-3">Ready to Get Started?</h2>
+          <p class="lead mb-3">Join TESAA today and be part of a global community making a difference.</p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <a href="/register" class="btn btn-light btn-lg px-4 gap-3">Create Account</a>
             <a href="/about" class="btn btn-outline-light btn-lg px-4">Learn More</a>
@@ -485,7 +469,7 @@
             <ul class="list-unstyled">
               <li><a href="/about" class="text-white">About Us</a></li>
               <li><a href="/about" class="text-white">How It Works</a></li>
-              <li><a href="/contact" class="text-white">Contact Us</a></li>
+              <li><a href="/about" class="text-white">Contact Us</a></li>
             </ul>
           </div>
           <div class="col-md-4">
