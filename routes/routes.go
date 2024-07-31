@@ -221,7 +221,7 @@ func MsiListHandler(w http.ResponseWriter, r *http.Request) {
 func ApplyLoanHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/apply_loan.html"))
 	tmpl.Execute(w, nil)
-	tmpl := template.Must(template.ParseFiles("template/mfi/apply_loan.html"))
+	tmpl = template.Must(template.ParseFiles("template/mfi/apply_loan.html"))
 	tmpl.Execute(w, userProfile)
 }
 
