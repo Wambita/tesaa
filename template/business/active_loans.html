@@ -31,22 +31,59 @@
     .navbar-brand {
       font-size: 1.8rem;
       font-weight: 500;
-      color: var(--primary-color) !important;
+      color: #3498db !important;
+      margin-right: auto;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar-nav .nav-link {
+      color: #fff !important;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+      color: var(--accent-color) !important;
     }
 
     .sidebar {
+      position: fixed;
+      top: 56px;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      padding: 48px 0 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color: var(--dark-bg);
     }
 
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 104px);
+      padding-top: .5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
     .sidebar .nav-link {
+      font-size: 0.9rem;
       font-weight: 500;
       color: #fff;
-      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .sidebar .nav-link:hover,
     .sidebar .nav-link.active {
-      color: var(--accent-color);
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
     }
 
     .main-content {
@@ -329,7 +366,7 @@
             <form>
               <div class="mb-3">
                 <label for="paymentAmount1" class="form-label">Payment Amount</label>
-                <input type="number" class="form-control" id="paymentAmount1" min="0" step="0.01">
+                <input type="number" class="form-control" id="paymentAmount" min="0" step="0.01">
               </div>
               <div class="mb-3">
                 <label for="paymentMethod1" class="form-label">Payment Method</label>
@@ -339,7 +376,7 @@
               </div>
               <div class="mb-3">
                 <label for="mpesa1" class="form-label">Mpesa number</label>
-                <input type="text" class="form-control" id="mpesa1" name="mpesa" required>
+                <input type="text" class="form-control" id="mpesa" name="mpesa" required>
               </div>
             </form>
           </div>
@@ -390,44 +427,62 @@
       function makePayment(loanId) {
         const amountElement = document.getElementById(`paymentAmount${loanId}`);
         const methodElement = document.getElementById(`paymentMethod${loanId}`);
-        const mpesaElement = document.getElementById(`mpesa${loanId}`);
         const modalElement = document.getElementById(`paymentModal${loanId}`);
 
-        if (!amountElement || !methodElement || !mpesaElement || !modalElement) {
-          console.error('One or more elements not found.');
+        // Collect data from the form
+        var amount = document.getElementById("paymentAmount").value;
+        var phoneNumber = document.getElementById("mpesa").value;
+
+        if (loanId ==2){
+          amount = document.getElementById("paymentAmount2").value;
+          phoneNumber = document.getElementById("mpesa2").value;
+        }
+
+
+        // Send data to the Go server
+        fetch("/make-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            amount: amount,
+            phoneNumber: phoneNumber,
+          }),
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            // Handle successful response
+            alert("Payment request sent successfully: " + data);
+          })
+          .catch((error) => {
+            // Handle error
+            console.error("Error:", error);
+            alert("Failed to send payment request.");
+          });
+
+        // Check if elements exist
+        if (!amountElement || !methodElement || !modalElement) {
+          console.error("One or more elements not found.");
           return;
         }
 
-        const amount = amountElement.value;
-        const method = methodElement.value;
-        const mpesaNumber = mpesaElement.value;
+        // Here you would typically send this data to your server to process the payment
+        console.log(
+          `Processing payment for Loan ${loanId}: $${amount} via ${method}`
+        );
 
-        console.log(`Processing payment for Loan ${loanId}: Ksh. ${amount} via ${method} using number ${mpesaNumber}`);
+        // For demo purposes, we'll just show an alert
+        alert(
+          `You will receive a prompt on your phone to complete the transaction via ${method}`
+        );
 
-        alert(`You will receive a prompt on your phone (${mpesaNumber}) to complete the transaction via ${method}`);
-
+        // Close the modal
         const modal = bootstrap.Modal.getInstance(modalElement);
         if (modal) {
           modal.hide();
         }
       }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        const sidebarToggle = document.querySelector('.navbar-toggler');
-        const sidebar = document.querySelector('.sidebar');
-
-        sidebarToggle.addEventListener('click', function() {
-          sidebar.classList.toggle('show');
-        });
-
-        // Close sidebar when clicking outside of it
-        document.addEventListener('click', function(event) {
-          const isClickInside = sidebar.contains(event.target) || sidebarToggle.contains(event.target);
-          if (!isClickInside && sidebar.classList.contains('show')) {
-            sidebar.classList.remove('show');
-          }
-        });
-      });
     </script>
   </body>
   </html>

@@ -2,24 +2,36 @@ package routes
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"text/template"
+	"time"
+
+	blockChain "tesaa/blockChain"
 )
 
 type RegisterData struct {
-	// OrgName     string
-	AccountType string
-	Email       string
-	Password    string
-	ConfirmPass string
-	Type        string
-	Years       string
-	License     string
-	Kra         string
-	Phone       string
+	AccountType string `json:"institution_type"`
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	ConfirmPass string `json:"confirm_pass"`
+	Type        string `json:"type"`
+	Years       string `json:"years"`
+	License     string `json:"license"`
+	Kra         string `json:"kra"`
+	Phone       string `json:"phone"`
+}
+
+type Loan struct {
+	Id      string `json:"id"`
+	Date    string `json:"date"`
+	Amount  string `json:"amount"`
+	Purpose string `json:"purpose"`
+	Status  string `json:"status"`
 }
 
 type User struct {
@@ -27,7 +39,13 @@ type User struct {
 	Email           string `json:"email"`
 	Password        string `json:"password"`
 	InstitutionType string `json:"institution_type"`
+	Loans           []Loan `json:"loans"`
 }
+
+const (
+	businessShortCode = "174379"
+	passKey           = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+)
 
 var userProfile User
 
@@ -43,7 +61,7 @@ func AboutHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println("ddd")
+	// fmt.Println("ddd")
 	data := RegisterData{
 		// 	OrgName:     r.FormValue("orgname"),
 		AccountType: r.FormValue("account-type"),
@@ -95,8 +113,6 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 	instType := r.FormValue("inst-type")
-	fmt.Println("Institution", instType)
-	fmt.Println("Email: ", email)
 
 	// Fetch users data
 	url := "http://localhost:3000/users?email=" + email
@@ -160,7 +176,7 @@ func BusinessHandler(w http.ResponseWriter, r *http.Request) {
 
 func MfiHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi_dashboard.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func ErrorHandler(w http.ResponseWriter, r *http.Request) {
@@ -170,46 +186,253 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request) {
 
 func MfiReportHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi/records.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func MfiReportDownloadHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi/download.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 // business pages routes
 func BusinessActiveLoansHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/active_loans.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func BusinessProfileHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/business_profile.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func BusinessLoanApplicationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/loan_applications.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func BusinessTransactionsHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/transactions.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func LoanApplicationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/business/loan_applications.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func MsiListHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/mfi/mfis.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, userProfile)
 }
 
 func ApplyLoanHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("template/business/apply_loan.html"))
-	tmpl.Execute(w, nil)
+	tmpl := template.Must(template.ParseFiles("template/mfi/apply_loan.html"))
+	tmpl.Execute(w, userProfile)
+}
+
+func LoanProcesor(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	amount := r.FormValue("amount")
+	// Define the path to the JSON file
+	filePath := "blockchain.json"
+
+	// Create a new blockchain instance with a mining difficulty of 3
+	bc, err := blockChain.CreateBlockchain(3, filePath)
+	if err != nil {
+		fmt.Printf("Failed to create blockchain: %v\n", err)
+		return
+	}
+
+	// Add a block to the blockchain
+	err = bc.AddBlock(map[string]interface{}{
+		"Transaction-Type": "Loan Application",
+		"from":             "mfi",
+		"to": map[string]interface{}{ // Changed "To" to lowercase "to" for consistency
+			"id":    userProfile.Id,
+			"email": userProfile.Email,
+			// Ensure that "password" is hashed and not stored as plain text
+			// "password":         userProfile.Password, // hashPassword is a placeholder function
+			"institution_type": userProfile.InstitutionType,
+		},
+		"amount": amount,
+		"time":   time.Now(),
+	})
+	if err != nil {
+		fmt.Printf("Failed to add block: %v\n", err)
+		return
+	}
+
+	newLoan := Loan{
+		Id:      fmt.Sprintf("loan-%d", len(userProfile.Loans)+1), // Generate a new unique ID
+		Date:    time.Now().Format("2006-01-02"),                  // Format to YYYY-MM-DD
+		Amount:  amount,
+		Purpose: "Business",
+		Status:  "pending",
+	}
+
+	// Append the new loan to the user's loans
+	userProfile.Loans = append(userProfile.Loans, newLoan)
+
+	// Convert userProfile to JSON
+	userProfileJSON, err := json.Marshal(userProfile)
+	if err != nil {
+		http.Error(w, "Error marshaling JSON", http.StatusInternalServerError)
+		return
+	}
+
+	// Prepare the PATCH request to update user profile with the new loan
+	url := fmt.Sprintf("http://localhost:3000/users/%s", userProfile.Id)
+	req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(userProfileJSON))
+	if err != nil {
+		http.Error(w, "Error creating request", http.StatusInternalServerError)
+		return
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	// Execute the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Error executing request", http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Handle response
+	if resp.StatusCode != http.StatusOK {
+		http.Error(w, "Failed to update user profile", resp.StatusCode)
+		return
+	}
+
+	// fmt.Fprintln(w, "Loan added and user profile updated successfully")
+
+	// fmt.Fprintln(w, "Loan added successfully")
+	fmt.Println("Blockchain valid:", bc.IsValid())
+
+	tmpl := template.Must(template.ParseFiles("auth/auth.html"))
+	tmpl.Execute(w, "Processing Your Loan...")
+}
+
+func generateTimestamp() string {
+	now := time.Now()
+	return now.Format("20060102150405")
+}
+
+func base64Encode(str string) string {
+	return base64.StdEncoding.EncodeToString([]byte(str))
+}
+
+// FetchAccessToken retrieves an access token from Safaricom's OAuth endpoint
+func FetchAccessToken() (string, error) {
+	url := "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+	method := "GET"
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", "Basic eUFHd3U0UnJoQ2tSNjBWUndYQUdHdlJVampxOHd0b2dBc1ZaaUdJbGhhRlVmd3dCOjdQbkxiVnpqeXBJWGUycWNOOGRpbXpHeXFSR1VRODVteUVzZ3RoZWp6Z0hTMHVqOWpvSTFUWVZRR2UyRWFBenE=")
+
+	res, err := client.Do(req)
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	fmt.Println(string(body)) // Read and log the response body
+	if err != nil {
+		return "", fmt.Errorf("failed to read response body: %v", err)
+	}
+	fmt.Printf("Response Body: %s\n", body)
+
+	// Parse JSON response
+	var response map[string]interface{}
+	if err := json.Unmarshal(body, &response); err != nil {
+		return "", fmt.Errorf("failed to parse response: %v", err)
+	}
+
+	// Extract access token
+	accessToken, ok := response["access_token"].(string)
+	if !ok {
+		return "", fmt.Errorf("access token not found in response")
+	}
+
+	return accessToken, nil
+}
+
+func makePayment(accessToken, amount, phoneNumber string) error {
+	timestamp := generateTimestamp()
+	passwordToEncode := businessShortCode + passKey + timestamp
+	base64Password := base64Encode(passwordToEncode)
+
+	payload := map[string]interface{}{
+		"BusinessShortCode": businessShortCode,
+		"Password":          base64Password,
+		"Timestamp":         timestamp,
+		"TransactionType":   "CustomerPayBillOnline",
+		"Amount":            amount,
+		"PartyA":            phoneNumber,
+		"PartyB":            businessShortCode,
+		"PhoneNumber":       phoneNumber,
+		"CallBackURL":       "https://waducbo.com/path",
+		"AccountReference":  "TESAA",
+		"TransactionDesc":   "LOAN",
+	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("payment request failed: %s", resp.Status)
+	}
+
+	var result map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return err
+	}
+
+	fmt.Println("Payment Response:", result)
+	return nil
+}
+
+func MakePaymentHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.ParseForm()
+	amount := r.FormValue("amount")
+	phoneNumber := r.FormValue("phoneNumber")
+
+	accessToken, err := FetchAccessToken()
+	if err != nil {
+		http.Error(w, "Failed to fetch access token", http.StatusInternalServerError)
+		fmt.Println("Error fetching access token:", err)
+		return
+	}
+
+	if err := makePayment(accessToken, amount, phoneNumber); err != nil {
+		http.Error(w, "Failed to make payment", http.StatusInternalServerError)
+		fmt.Println("Error making payment:", err)
+		return
+	}
+
+	fmt.Fprintf(w, "Payment request processed successfully")
 }
