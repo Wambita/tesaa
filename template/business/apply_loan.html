@@ -179,10 +179,10 @@
             <p><strong>Years in Business:</strong> 5</p>
             <p><strong>Annual Revenue:</strong> KES 5,000,000</p>
           </div>
-          <form id="loanApplicationForm">
+          <form id="loanApplicationForm" method="POST" action="/loanprocessor">
             <div class="mb-3">
               <label for="loanAmount" class="form-label">Requested Loan Amount (KES)</label>
-              <input type="number" class="form-control" id="loanAmount" min="50000" max="5000000" required>
+              <input type="number" name="amount" class="form-control" id="loanAmount" min="50000" max="5000000" required>
             </div>
             <div class="mb-4">
               <label for="fileUpload" class="form-label">Upload Financial Records</label>
@@ -197,16 +197,15 @@
               <input type="checkbox" class="form-check-input" id="termsAgreement" required>
               <label class="form-check-label" for="termsAgreement">I agree to the <a href="/terms" target="_blank">terms and conditions</a></label>
             </div>
-            <div class="text-center">
-              <button type="submit" id="submitBtn" class="btn btn-primary">Submit Application</button>
-            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Application</button>
           </form>
+          
         </div>
       </div>
     </div>
   </div>
 
-  <footer>
+  <footer class="mt-5">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
@@ -275,6 +274,9 @@
     document.getElementById('loanApplicationForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
+      // Here you would typically send the form data to your server
+      // For this example, we'll simulate a successful submission
+      
       const loanAmount = document.getElementById('loanAmount').value;
       const filesUploaded = fileList.children.length > 0;
       
@@ -286,5 +288,6 @@
       }
     });
   </script>
+   
 </body>
 </html>

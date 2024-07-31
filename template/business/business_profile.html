@@ -155,7 +155,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <span class="navbar-text me-3">Welcome, John's Small Business</span>
+            <span class="navbar-text me-3">Welcome, {{.Email}}</span>
           </li>
           <li class="nav-item">
             <a href="/logout" class="btn btn-outline-light">Logout</a>
@@ -214,7 +214,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <img src="https://via.placeholder.com/150" alt="John Doe" class="profile-picture mb-3">
-                <h4>John's Small Business</h4>
+                <h4>{{.Email}} Small Business</h4>
                 <p class="text-muted">Small Enterprise</p>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
               </div>
@@ -226,7 +226,7 @@
                 <h5 class="card-title">Business Information</h5>
                 <dl class="row">
                   <dt class="col-sm-3">Business Name</dt>
-                  <dd class="col-sm-9">John's Small Business</dd>
+                  <dd class="col-sm-9">{{.Email}} Small Business</dd>
 
                   <dt class="col-sm-3">Owner</dt>
                   <dd class="col-sm-9">John Doe</dd>

@@ -4,7 +4,72 @@
       "id": "1",
       "email": "test@example.com",
       "password": "100",
-      "institution_type": "business"
+      "institution_type": "business",
+      "loans": [
+        {
+          "id": "loan-1",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-2",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-3",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-4",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-5",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-6",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-7",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-8",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        },
+        {
+          "id": "loan-9",
+          "date": "2024-07-31",
+          "amount": "",
+          "purpose": "Business",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "2",
@@ -233,16 +298,16 @@
       "Phone": ""
     },
     {
-      "id": "4895",
-      "AccountType": "",
-      "Email": "",
-      "Password": "",
-      "ConfirmPass": "",
-      "Type": "",
-      "Years": "",
-      "License": "",
-      "Kra": "",
-      "Phone": ""
+      "id": "d4cd",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
     }
   ]
 }

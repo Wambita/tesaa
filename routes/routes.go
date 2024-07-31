@@ -233,6 +233,7 @@ func ApplyLoanHandler(w http.ResponseWriter, r *http.Request) {
 func LoanProcesor(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	amount := r.FormValue("amount")
+	fmt.Println(amount)
 	// Define the path to the JSON file
 	filePath := "blockchain.json"
 
@@ -254,7 +255,7 @@ func LoanProcesor(w http.ResponseWriter, r *http.Request) {
 			// "password":         userProfile.Password, // hashPassword is a placeholder function
 			"institution_type": userProfile.InstitutionType,
 		},
-		"amount": amount,
+		"amount": fmt.Sprint(amount),
 		"time":   time.Now(),
 	})
 	if err != nil {
@@ -265,7 +266,7 @@ func LoanProcesor(w http.ResponseWriter, r *http.Request) {
 	newLoan := Loan{
 		Id:      fmt.Sprintf("loan-%d", len(userProfile.Loans)+1), // Generate a new unique ID
 		Date:    time.Now().Format("2006-01-02"),                  // Format to YYYY-MM-DD
-		Amount:  amount,
+		Amount:  fmt.Sprint(amount),
 		Purpose: "Business",
 		Status:  "pending",
 	}
