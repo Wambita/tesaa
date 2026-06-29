@@ -1,10 +1,12 @@
-<html><head><base href="/">
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <title>Register - Tesaa</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-color: #007bff;
@@ -96,6 +98,7 @@
   </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
     <a class="navbar-brand" href="/">Tesaa</a>
@@ -122,20 +125,26 @@
   <div class="login-container">
     <h2 class="text-center mb-4">Register to Tesaa</h2>
 
-    <form id="loginForm" action="/register" method="POST">
+    <form id="registrationForm" action="/register" method="POST">
       <div class="login-type-selector">
+        <label for="loginType" class="form-label">Account Type</label>
         <select class="form-select" id="loginType" name="account-type">
-          <option value="business">Business</option>
+          <option value="business" selected>Business</option>
           <option value="microfinance">Microfinance Institution</option>
         </select>
       </div>
+
       <div class="mb-3">
-        <label for="name" class="form-label">Full Name / Organization Name</label>
-        <input type="text" class="form-control" id="name" required>
+        <label id="name-label" for="name" class="form-label">Business / Organization Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
       </div>
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label id="email-label" for="email" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone number</label>
+        <input type="tel" class="form-control" id="phone" name="phone" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
@@ -145,6 +154,7 @@
         <label for="confirm-password" class="form-label">Confirm Password</label>
         <input type="password" class="form-control" id="confirm-password" name="confirm" required>
       </div>
+
       <div id="business-fields">
         <div class="mb-3">
           <label for="business-type" class="form-label">Business Type</label>
@@ -155,80 +165,29 @@
           <input type="number" class="form-control" id="years-operating" min="0" name="years" required>
         </div>
         <div class="mb-3">
-          <label for="license" class="form-label">Business License</label>
+          <label for="license" class="form-label">Business License Number</label>
           <input type="text" class="form-control" id="license" name="license" required>
         </div>
         <div class="mb-3">
-          <label for="kra-pin" class="form-label">KRA Pin</label>
+          <label for="kra-pin" class="form-label">KRA PIN</label>
           <input type="text" class="form-control" id="kra-pin" name="kra" required>
         </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone number</label>
-          <input type="tel" class="form-control" id="phone" name="phone" required>
-      </nav>
-    
-      <main class="container">
-        <div class="login-container">
-          <h2 class="text-center mb-4">Register to Tesaa</h2>
+      </div>
 
-          <form id="loginForm" action="/register" method="POST">
-            <div class="login-type-selector">
-              <select class="form-select" id="loginType" name="account-type">
-                <option value="business">Business</option>
-                <option value="microfinance">Microfinance Institution</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="name" class="form-label">Full Name / Organization Name</label>
-              <input type="text" class="form-control" id="name" required>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="email">
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="pass" required>
-            </div>
-            <div class="mb-3">
-              <label for="confirm-password" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="confirm-password" name="confirm" required>
-            </div>
-            <div id="business-fields">
-              <div class="mb-3">
-                <label for="business-type" class="form-label">Business Type</label>
-                <input type="text" class="form-control" id="business-type" name="type" required>
-              </div>
-              <div class="mb-3">
-                <label for="years-operating" class="form-label">Years in Operation</label>
-                <input type="number" class="form-control" id="years-operating" min="0" name="years" required>
-              </div>
-              <div class="mb-3">
-                <label for="mfi-license" class="form-label">Business License</label>
-                <input type="text" class="form-control" id="license" name="license" required>
-              </div>
-              <div class="mb-3">
-                <label for="mfi-license" class="form-label">KRA Pin</label>
-                <input type="text" class="form-control" id="kra-pin" name="kra" required>
-              </div>
-              <div class="mb-3">
-                <label for="mfi-license" class="form-label">Phone number</label>
-                <input type="text" class="form-control" id="phone" name="phone" required>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Sign up</button>
-          </form>
-          <div class="text-center mt-3">
-            <a href="/forgot-password">Forgot password?</a>
-          </div>
-          <hr>
-          <div class="text-center">
-            <p>Already have an account? <a href="/login">Login here</a></p>
-          </div>
+      <div id="mfi-fields" style="display: none;">
+        <div class="mb-3">
+          <label for="mfi-reg-number" class="form-label">MFI Registration Number</label>
+          <input type="text" class="form-control" id="mfi-reg-number" name="mfi_reg_num">
+        </div>
+        <div class="mb-3">
+          <label for="mfi-license" class="form-label">Central Bank License / Regulatory PIN</label>
+          <input type="text" class="form-control" id="mfi-license" name="mfi_license">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Sign up</button>
+
+      <button type="submit" class="btn btn-primary w-100 mt-3">Sign up</button>
     </form>
+
     <div class="text-center mt-3">
       <a href="/forgot-password">Forgot password?</a>
     </div>
@@ -274,12 +233,30 @@
   document.addEventListener('DOMContentLoaded', function() {
     const loginType = document.getElementById('loginType');
     const businessFields = document.getElementById('business-fields');
+    const mfiFields = document.getElementById('mfi-fields');
+    const nameLabel = document.getElementById('name-label');
 
+    // Dynamic UI Toggle logic
     loginType.addEventListener('change', function() {
+      const bizInputs = businessFields.querySelectorAll('input');
+      const mfiInputs = mfiFields.querySelectorAll('input');
+
       if (this.value === 'microfinance') {
         businessFields.style.display = 'none';
+        mfiFields.style.display = 'block';
+        nameLabel.textContent = "Microfinance Institution Name";
+        
+        // Remove 'required' status from hidden elements to allow submission
+        bizInputs.forEach(input => input.removeAttribute('required'));
+        mfiInputs.forEach(input => input.setAttribute('required', ''));
       } else {
         businessFields.style.display = 'block';
+        mfiFields.style.display = 'none';
+        nameLabel.textContent = "Business / Organization Name";
+        
+        // Restore 'required' attributes to active display elements
+        bizInputs.forEach(input => input.setAttribute('required', ''));
+        mfiInputs.forEach(input => input.removeAttribute('required'));
       }
     });
   });

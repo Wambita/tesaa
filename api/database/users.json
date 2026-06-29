@@ -243,6 +243,138 @@
       "license": "",
       "kra": "",
       "phone": ""
+    },
+    {
+      "id": "a3f8",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "4fc4",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "bc83",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "0333",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "5033",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "f9cf",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "2ac6",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "9074",
+      "institution_type": "microfinance",
+      "email": "test12@example.com",
+      "password": "1234",
+      "confirm_pass": "1234",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": "0792281871"
+    },
+    {
+      "id": "068d",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
+    },
+    {
+      "id": "623c",
+      "institution_type": "microfinance",
+      "email": "test123@example.com",
+      "password": "1234",
+      "confirm_pass": "1234",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": "0792281871"
+    },
+    {
+      "id": "be55",
+      "institution_type": "",
+      "email": "",
+      "password": "",
+      "confirm_pass": "",
+      "type": "",
+      "years": "",
+      "license": "",
+      "kra": "",
+      "phone": ""
     }
   ]
 }
