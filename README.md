@@ -1,5 +1,5 @@
 # Tesaa FinBridge
-![Tesaa FinBridge Landing Page](/images/landing-page.png)
+![Tesaa FinBridge Landing Page](/assets/landing-page.png)
 
 
 **Bridging Small Businesses and Microfinance Institutions Through Technology.**
@@ -16,46 +16,46 @@ Explore the platform's user interface and key features.
 
 The landing page introduces Tesaa FinBridge and its mission to improve access to financial services for small businesses.
 
-![Tesaa FinBridge Landing Page](/images/landing-page.png)
+![Tesaa FinBridge Landing Page](/assets/landing-page.png)
 
 ### 2. Business Onboarding
 
 A dedicated onboarding experience for small businesses seeking access to financial services.
 
-![Business Onboarding](/images/landing page-borrower.png)
+![Business Onboarding](/assets/landing page-borrower.png)
 
 
-![Business Onboarding](/images/business-onboarding.png)
+![Business Onboarding](/assets/business-onboarding.png)
 
 ### 3. Microfinance Institution Onboarding
 
 An onboarding experience designed for microfinance institutions joining the platform.
-![MFI Onboarding](/images/mfi-onboarding.png)
+![MFI Onboarding](/assets/mfi-onboarding.png)
 
-![MFI Onboarding](/images/landing page-lender.png)
+![MFI Onboarding](/assets/landing page-lender.png)
 
 ### 4. Borrower Dashboard
 
 A centralised dashboard where business users can access their account information and manage their borrowing activities.
 
-![Borrower Dashboard](/images/borrower-dashboard.png)
+![Borrower Dashboard](/assets/borrower-dashboard.png)
 
-![Borrower Profile](/images/borrower-profile.png)
+![Borrower Profile](/assets/borrower-profile.png)
 
 
 ### 5. Loan Application
 
 An interface that allows businesses to submit loan applications through the platform.
 
-![Loan Application](/images/loan-application.png)
+![Loan Application](/assets/loan-application.png)
 
 ### 6. Microfinance Institution Dashboard
 
 A dedicated dashboard for microfinance institutions to manage their platform activities.
 
-![MFI Dashboard](/images/mfi-dashboard.png)
+![MFI Dashboard](/assetss/mfi-dashboard.png)
 
-![MFI Dashboard](/images/mfi-transactions.png)
+![MFI Dashboard](/assets/mfi-transactions.png)
 
 
 ---
